@@ -1,0 +1,66 @@
+/*
+ ============================================================================
+ Name        : Parcial_Laboratorio_I.c
+ Author      : 
+ Version     :
+ Copyright   : Your copyright notice
+ Description : Hello World in C, Ansi-style
+ ============================================================================
+ */
+
+#include "Input.h"
+#include "zona.h"
+#include "censista.h"
+
+
+int main(void) {
+	setbuf(stdout, NULL);
+	    int opcion;
+
+	    do
+	    {
+	    printf("\n+++++++++++++++++++++++++++ MENU ++++++++++++++++++++++++++++++\n");
+	    printf("\n1. Cargar\n");
+	    printf("2. Modificar\n");
+	    printf("3. Dar de baja\n");
+	    printf("4. Cargar Zona\n");
+	    printf("5. Asignar zona a censar\n");
+	    printf("6. Carga de datos\n");
+	    printf("7. Mostrar censistas\n");
+	    printf("8. Mostrar zonas\n");
+	    printf("9. Salir\n");
+
+	    printf("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+	    opcion=enteroValidado("Elija una opcion: ","La opcion debe ser del 1 al 8: ", 1,9);
+
+	    switch(opcion)
+	        {
+	        case 1:
+	        printf("\n1. uno\n");
+	        break;
+	        case 2:
+	        printf("2. dos\n");
+	        break;
+	        case 3:
+	        printf("3. Dar de 3\n");
+	        break;
+	        case 4:
+	        printf("4. Cargar 4\n");
+	        break;
+	        case 5:
+	        printf("5. Asignar 5\n");
+	        break;
+	        case 6:
+	        printf("6. Carga 6\n");
+	        break;
+	        case 7:
+	        printf("7. Mostrar 7\n");
+	        break;
+	        case 8:
+	        printf("8. Mostrar 8\n");
+	        break;
+	        }
+	    }while(opcion!=9);
+
+	    return 0;
+}

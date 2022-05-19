@@ -1,0 +1,314 @@
+#include "censista.h"
+#include "informes.h"
+
+void InicializarListaCensistas(Censista *lista, int tam) {
+
+	if (lista != NULL && tam > 0) {
+
+		for (int i = 0; i < tam; i++) {
+			lista[i].isEmpty = 1;// se inicializan el array con el campo Isempty en 1 = vacio
+
+		}
+	}
+}
+
+int BuscarPrimerEspacioLibre(Censista *lista, int tam) {
+	int i;
+	int index;
+
+	index = -1;
+	for (i = 0; i < tam; i++) {
+		if (lista[i].isEmpty == 1) {
+			index = i;
+			break;
+		}
+
+	}
+	if (index == -1) {
+		printf("La lista esta ocupada\n");
+	}
+	return index;
+}
+
+int incrementarIdCensista(int valor) {
+	static int id;
+	static int flagValorInicial = 0;
+	if (flagValorInicial == 0) {
+		id = valor;
+		flagValorInicial = 1;
+	}
+	id++;
+	return id;
+}
+
+int ingresarCensista(Censista *Listado, int tam) {
+
+	int retorno = -1;
+
+	int index = BuscarPrimerEspacioLibre(Listado, tam);
+	if (index != -1) {
+
+		Listado[index].idCensista = incrementarIdCensista(1000);
+		getString(Listado[index].nombre, "Ingrese nombre: ", 51);
+		getString(Listado[index].apellido, "Ingrese apellido: ", 51);
+
+		Listado[index].estado = 1;
+		getStringAlfaNumerico(Listado[index].datoComplementario.direccion,
+				"Ingrese direccion: ", 51);
+		Listado[index].datoComplementario.fechaNacimiento.diaNacimiento =
+				enteroValidado("Ingresar dia de nacimiento: ",
+						"\nError!!! Dias del 1 al 31 :  ", 1, 31);
+		Listado[index].datoComplementario.fechaNacimiento.mesNacimiento =
+				enteroValidado("Ingresar mes de nacimiento: ",
+						"\nError!!! Meses del 1 al 12 : ", 1, 12);
+		Listado[index].datoComplementario.fechaNacimiento.anioNacimiento =
+				enteroValidado("Ingresar anio de nacimiento: ",
+						"\nError!!! AC1o del 1958 al 2004 : ", 1958, 2004);
+		Listado[index].isEmpty = 0;
+		Listado[index].edad =
+				ANIOACTUAL
+						- Listado[index].datoComplementario.fechaNacimiento.anioNacimiento;
+		retorno = 0;
+	}
+	return retorno;
+
+}
+
+
+
+
+
+void Mostrar(Censista Listado[], int tam) {
+	char auxiliar[50];
+
+	for (int i = 0; i < tam; i++) {
+		if (Listado[i].isEmpty == 0) {
+			switch (Listado[i].estado) {
+			case LIBERADO:
+				strcpy(auxiliar, "Liberado");
+				printf("\n%d %10s %17s %20d %12s %12s %8d/%d/%d ",
+						Listado[i].idCensista, Listado[i].nombre,
+						Listado[i].apellido, Listado[i].edad, auxiliar,
+						Listado[i].datoComplementario.direccion,
+						Listado[i].datoComplementario.fechaNacimiento.diaNacimiento,
+						Listado[i].datoComplementario.fechaNacimiento.mesNacimiento,
+						Listado[i].datoComplementario.fechaNacimiento.anioNacimiento);
+				break;
+			case ACTIVO:
+				strcpy(auxiliar, "Activo");
+				printf("\n%d %10s %17s %20d %12s %12s %8d/%d/%d ",
+						Listado[i].idCensista, Listado[i].nombre,
+						Listado[i].apellido, Listado[i].edad, auxiliar,
+						Listado[i].datoComplementario.direccion,
+						Listado[i].datoComplementario.fechaNacimiento.diaNacimiento,
+						Listado[i].datoComplementario.fechaNacimiento.mesNacimiento,
+						Listado[i].datoComplementario.fechaNacimiento.anioNacimiento);
+				break;
+			case INACTIVO:
+				strcpy(auxiliar, "Inactivo");
+				printf("\n%d %10s %17s %20d %12s %12s %8d/%d/%d ",
+						Listado[i].idCensista, Listado[i].nombre,
+						Listado[i].apellido, Listado[i].edad, auxiliar,
+						Listado[i].datoComplementario.direccion,
+						Listado[i].datoComplementario.fechaNacimiento.diaNacimiento,
+						Listado[i].datoComplementario.fechaNacimiento.mesNacimiento,
+						Listado[i].datoComplementario.fechaNacimiento.anioNacimiento);
+				break;
+			}
+		}
+	}
+}
+
+void MostrarCensistasLiberados(Censista* lista, int tam)
+{
+	for (int i = 0; i < tam; i++)
+	{
+			if (lista[i].isEmpty == 0 && lista[i].estado == 1)
+			{
+			printf("\n\tId\tNombre\t\tApellido\tEdad\tEstado\n");
+			printf("\n%d %10s %17s %20d %12s ",	lista[i].idCensista, lista[i].nombre,
+					lista[i].apellido, lista[i].edad,"Liberado");
+			}
+	}
+}
+
+int modificarCensista(Censista *lista, int tam) {
+	int i;
+	int censitaAModificar;
+	int edadAcambiar;
+	int estadoACambiar;
+	char nombreACambiar[51];
+	char apellidoACambiar[51];
+	char direccionACambiar[50];
+	int diaACambiar;
+	int mesACambiar;
+	int anioACambiar;
+
+	int retorno;
+	int opcionMenu;
+	char opcionSubmenu;
+	int contador = 0;
+	int contadorSubMenu = 0;
+
+	retorno = -1;
+	MostrarCensistas(lista, tam);
+	censitaAModificar = IngresarEntero(
+			"\nIngrese el ID del censita a modificar: ");
+
+	for (i = 0; i < tam; i++) {
+		if (lista[i].isEmpty == 0 && lista[i].idCensista == censitaAModificar) {
+
+			do {
+
+				printf("\n1. Modificar Nombre\n");
+				printf("2. Modificar Apellido\n");
+				printf("3. Modificar edad\n");
+				printf("4. Modificar estado del censista\n");
+				printf("5. Modificar Otros datos \n");
+				printf("6. Volver al menu anterior\n");
+				opcionMenu = enteroValidado("Seleccione opcion: ",
+						"Se puede seleccionar del 1 al 6 ", 1, 6);
+
+				switch (opcionMenu) {
+				case 1:
+					getString(nombreACambiar, "Ingrese nuevo nombre: ", 51);
+					strcpy(lista[i].nombre, nombreACambiar);
+					retorno = 1;
+					printf("ID %d modificado ", censitaAModificar);
+					contador++;
+					break;
+				case 2:
+					getString(apellidoACambiar, "Ingrese nuevo apellido: ", 51);
+					strcpy(lista[i].apellido, apellidoACambiar);
+					retorno = 1;
+					printf("ID %d modificado ", censitaAModificar);
+					contador++;
+					break;
+				case 3:
+					edadAcambiar = enteroValidado("\nIngrese la edad nueva: ",
+							"La edad debe ser entre >= a 18 y <= a 64: ", 18,
+							64);
+					lista[i].edad = edadAcambiar;
+					retorno = 1;
+					printf("ID %d modificado ", censitaAModificar);
+					contador++;
+					break;
+				case 4:
+					estadoACambiar =
+							enteroValidado("Ingresar el estado del censista: ",
+									"Error!!! \nEl estado puede ser 1=Liberado 2=Activo 3=Inactivo: ",
+									1, 3);
+					lista[i].estado = estadoACambiar;
+					retorno = 1;
+					printf("ID %d modificado ", censitaAModificar);
+					contador++;
+					break;
+				case 5:
+					printf("++++++++Otros datos a modificar++++++++++");
+					printf("\na. Modificar Direccion\n");
+					printf("b. Modificar Dia de nacimiento\n");
+					printf("c. Modificar Mes de nacimiento\n");
+					printf("d. Modificar AC1o de nacimiento\n");
+					printf("e. Volver para atras\n");
+					opcionSubmenu = IngreseCaracter("Ingrese opcion:");
+					switch (opcionSubmenu) {
+					case 'a':
+						getStringAlfaNumerico(direccionACambiar,
+								"Ingrese direccion nueva: ", 51);
+						strcpy(lista[i].datoComplementario.direccion,
+								direccionACambiar);
+						retorno = 1;
+						printf("ID %d modificado ", censitaAModificar);
+						contadorSubMenu++;
+						break;
+					case 'b':
+						diaACambiar = enteroValidado("\nIngrese el dia: ",
+								"El dia debe ser entre: ", 1, 31);
+						lista[i].datoComplementario.fechaNacimiento.diaNacimiento =
+								diaACambiar;
+						retorno = 1;
+						printf("ID %d modificado ", censitaAModificar);
+						contadorSubMenu++;
+						break;
+					case 'c':
+						mesACambiar = enteroValidado("\nIngrese el mes: ",
+								"El mes debe ser entre: ", 1, 12);
+						lista[i].datoComplementario.fechaNacimiento.mesNacimiento =
+								mesACambiar;
+						retorno = 1;
+						contadorSubMenu++;
+						break;
+					case 'd':
+						anioACambiar = enteroValidado("\nIngrese el mes: ",
+								"El mes debe ser entre: ", 1, 12);
+						lista[i].datoComplementario.fechaNacimiento.anioNacimiento =
+								anioACambiar;
+						retorno = 1;
+						contadorSubMenu++;
+						break;
+					case 'e':
+						printf("Se volvio para atras");
+						contadorSubMenu++;
+						break;
+					}
+					break;
+				case 6:
+					printf("Volviste al menu\n");
+					retorno = 1;
+					contador++;
+					break;
+				}
+			} while (contador != 1);
+		}
+	}
+	if (retorno == -1) {
+		printf("\nEl ID ingresado no existe");
+	}
+	return retorno;
+}
+
+int darDeBaja(Censista *list, int tam) {
+	int i;
+	int auxCensista = -1;
+	int idCensista;
+	MostrarCensistas(list, tam);
+	idCensista = IngresarEntero("\nIngrese el Id del censista a borrar: ");
+
+	for (i = 0; i < tam; i++) {
+		if (list[i].isEmpty == 0 && list[i].idCensista == idCensista
+				&& list[i].estado != 2) {
+			list[i].isEmpty = 1;
+			list[i].estado = 3;
+			auxCensista = 0;
+			printf("ID %d dado de baja", idCensista);
+			break;
+		}
+		if (list[i].isEmpty == 0 && list[i].idCensista == idCensista
+				&& list[i].estado == 2) {
+			list[i].estado = 3;
+			auxCensista = 0;
+			printf("El censista %d se paso a estado Inactivo", idCensista);
+			break;
+		}
+
+	}
+	if (auxCensista == -1) {
+		printf("\nEl ID ingresado no existe");
+	}
+
+	return auxCensista;
+}
+
+int buscarIndexPorId(Censista *listaCensista, int len, int id) {
+	int retorno = -1;
+	if (listaCensista != NULL && len > 0 && id > 0) {
+		for (int i = 0; i < len; i++) {
+			if (listaCensista[i].idCensista == id
+					&& listaCensista[i].isEmpty == 0) {
+				retorno = i;
+				break;
+			}
+		}
+	}
+	return retorno;
+}

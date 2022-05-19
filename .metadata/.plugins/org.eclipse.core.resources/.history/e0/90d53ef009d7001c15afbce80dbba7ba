@@ -1,0 +1,16 @@
+/*
+ * informes.h
+ *
+ *  Created on: 18 may 2022
+ *      Author: Compumar
+ */
+
+#ifndef INFORMES_H_
+#define INFORMES_H_
+
+#include "censista.h"
+#include "zona.h"
+
+void MostrarZonasConCensistas (Zona* ListadoZona, int tam, Censista* list, int tamList );
+
+#endif /* INFORMES_H_ */

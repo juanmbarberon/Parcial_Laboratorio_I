@@ -1,0 +1,23 @@
+/*
+ * zona.h
+ *
+ *  Created on: 15 may 2022
+ *      Author: Compumar
+ */
+
+#ifndef ZONA_H_
+#define ZONA_H_
+
+
+typedef struct{
+    int idZona;
+    int localidad;
+    char calles[80];
+    int censados;
+    int ausentes;
+    int estadoZona;
+    int idCensista;
+}Zona;
+
+
+#endif /* ZONA_H_ */

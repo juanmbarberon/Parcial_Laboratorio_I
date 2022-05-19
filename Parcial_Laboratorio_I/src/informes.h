@@ -1,0 +1,12 @@
+
+
+#ifndef INFORMES_H_
+#define INFORMES_H_
+
+#include "censista.h"
+#include "zona.h"
+
+void MostrarZonasConCensistas (Zona* ListadoZona, int tam, Censista* list, int tamList );
+int MostrarCensistas(Censista* list, int tam);
+
+#endif /* INFORMES_H_ */
