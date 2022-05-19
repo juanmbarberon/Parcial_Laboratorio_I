@@ -11,7 +11,7 @@ void MostrarZonasConCensistas (Zona* Listado, int tam, Censista* list, int tamLi
     for(i=0;i<tam;i++)
 	            {
 	                indexCensista=buscarIndexPorId(list, tamList, Listado[i].idCensista);
-	                if(Listado[i].isEmpty==0)
+	                if(Listado[i].isEmpty==0 && Listado[i].idCensista > 0)
 	                {
 
 	                    switch(Listado[i].estadoZona)
@@ -29,6 +29,10 @@ void MostrarZonasConCensistas (Zona* Listado, int tam, Censista* list, int tamLi
 	                    }
 
 	                }
+	                if(Listado[i].idZona>0 && Listado[i].estadoZona==PENDIENTE && Listado[i].idCensista== 0)
+	               	          {
+	               	          printf("\nLa zona %d no tiene censista asignado", Listado[i].idZona);
+	               	          }
 	            }
 }
 
