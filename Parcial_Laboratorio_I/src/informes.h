@@ -8,5 +8,9 @@
 
 void MostrarZonasConCensistas (Zona* ListadoZona, int tam, Censista* list, int tamList );
 int MostrarCensistas(Censista* list, int tam);
+void localidadConMasAusentes(Zona pArray[], int lenZona);
+int censistasActivoYPendiente(Zona pArray[], int lenZona,Censista lista[], int lenLista );
+int buscarIdConMasCensadosTotal(Zona pArray[], int tam, int idCensista);
+int informarIdConMasCensados(Zona pArray[], int lenZona, Censista censistas[], int lenCensistas);
 
 #endif /* INFORMES_H_ */

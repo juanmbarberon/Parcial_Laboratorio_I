@@ -237,7 +237,9 @@ void localidadHardcodeada(Localidad* pArray)
         pArray[2].idLocalidad=3;
         strcpy(pArray[2].descripcion,"Gerli");
         pArray[2].isEmpty=0;
-
+        pArray[3].idLocalidad=4;
+        strcpy(pArray[3].descripcion,"Banfield");
+        pArray[3].isEmpty=0;
 
 }
 
@@ -283,7 +285,7 @@ void cargaZonasForzada(Zona* zonas)
 	zonas[2].isEmpty = 0;
 
 	zonas[3].idZona=incrementarIdZonas(4303);
-	zonas[3].idLocalidad = 3;
+	zonas[3].idLocalidad = 4;
 	strcpy (zonas[3].calleUno, "India");
 	strcpy (zonas[3].calleDos, "Porto");
 	strcpy (zonas[3].calleTres, "San Martin");
